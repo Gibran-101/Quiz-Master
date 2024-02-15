@@ -20,11 +20,11 @@ class QuizInterface:
         self.score_card.grid(row=0, column=1)
 
         self.wrong_button_img = PhotoImage(file="images/false.png")
-        self.wrong_button = Button(image=self.wrong_button_img, highlightthickness=0)
+        self.wrong_button = Button(image=self.wrong_button_img, highlightthickness=0, command=self.wrong_button)
         self.wrong_button.grid(row=2, column=0)
 
         self.right_button_img = PhotoImage(file="images/true.png")
-        self.right_button = Button(image=self.right_button_img, highlightthickness=0)
+        self.right_button = Button(image=self.right_button_img, highlightthickness=0, command= self.correct_clicked)
         self.right_button.grid(row=2, column=1)
 
         self.get_next_question()
@@ -35,3 +35,10 @@ class QuizInterface:
     def get_next_question(self):
         q_text = self.quiz.next_question()
         self.canvas.itemconfig(self.question_text, text=q_text)
+
+    def correct_clicked(self):
+        self.quiz.check_answer("True")
+
+    def wrong_clicked(self):
+        self.quiz.check_answer("False")
+
