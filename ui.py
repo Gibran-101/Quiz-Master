@@ -20,7 +20,7 @@ class QuizInterface:
         self.score_card.grid(row=0, column=1)
 
         self.wrong_button_img = PhotoImage(file="images/false.png")
-        self.wrong_button = Button(image=self.wrong_button_img, highlightthickness=0, command=self.wrong_button)
+        self.wrong_button = Button(image=self.wrong_button_img, highlightthickness=0, command=self.wrong_clicked)
         self.wrong_button.grid(row=2, column=0)
 
         self.right_button_img = PhotoImage(file="images/true.png")
@@ -30,15 +30,25 @@ class QuizInterface:
         self.get_next_question()
 
         self.window.mainloop()
-    # It takes the input from the next_question and reflects the question on canvas
 
+    # It takes the input from the next_question and reflects the question on canvas
     def get_next_question(self):
+        self.canvas.config(bg="white")
         q_text = self.quiz.next_question()
         self.canvas.itemconfig(self.question_text, text=q_text)
 
     def correct_clicked(self):
-        self.quiz.check_answer("True")
+        is_right = self.quiz.check_answer("True")
+        self.give_feedback(is_right)
 
     def wrong_clicked(self):
-        self.quiz.check_answer("False")
+        is_right = self.quiz.check_answer("False")
+        self.give_feedback(is_right)
+
+    def give_feedback(self, valid):
+        if valid:
+            self.canvas.config(bg="green")
+        else:
+            self.canvas.config(bg="red")
+        self.window.after(1000, self.get_next_question)
 
