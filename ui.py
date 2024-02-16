@@ -34,8 +34,14 @@ class QuizInterface:
     # It takes the input from the next_question and reflects the question on canvas
     def get_next_question(self):
         self.canvas.config(bg="white")
-        q_text = self.quiz.next_question()
-        self.canvas.itemconfig(self.question_text, text=q_text)
+        if self.quiz.still_has_questions():
+            self.score_card.config(text=f"Score: {self.quiz.score}")
+            q_text = self.quiz.next_question()
+            self.canvas.itemconfig(self.question_text, text=q_text)
+        else:
+            self.canvas.itemconfig(self.question_text, text="You have reached the end of the quiz.")
+            self.right_button.config(state="disabled")
+            self.wrong_button.config(state="disabled")
 
     def correct_clicked(self):
         is_right = self.quiz.check_answer("True")
