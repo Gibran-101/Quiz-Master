@@ -10,7 +10,7 @@ for question in question_data:
     new_question = Question(question_text, question_answer)
     question_bank.append(new_question)
 
-
+# Creating an instance of the QuizBrain class with the populated question_bank lis
 quiz = QuizBrain(question_bank)
 # As quiz is an object of class QuizBrain, the class QuizInterface only accepts the obects
 # of that particular class only.

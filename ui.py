@@ -31,8 +31,8 @@ class QuizInterface:
 
         self.window.mainloop()
 
-    # It takes the input from the next_question and reflects the question on canvas
     def get_next_question(self):
+        # Get the next question from the QuizBrain and update the canvas
         self.canvas.config(bg="white")
         if self.quiz.still_has_questions():
             self.score_card.config(text=f"Score: {self.quiz.score}")
@@ -44,17 +44,21 @@ class QuizInterface:
             self.wrong_button.config(state="disabled")
 
     def correct_clicked(self):
+        # Handle the click on the True button
         is_right = self.quiz.check_answer("True")
         self.give_feedback(is_right)
 
     def wrong_clicked(self):
+        # Handle the click on the False button
         is_right = self.quiz.check_answer("False")
         self.give_feedback(is_right)
 
     def give_feedback(self, valid):
+        # Provide feedback by changing the canvas background color and move to the next question
         if valid:
             self.canvas.config(bg="green")
         else:
             self.canvas.config(bg="red")
+        # Use window.after to delay getting the next question for 1000 milliseconds.
         self.window.after(1000, self.get_next_question)
 
